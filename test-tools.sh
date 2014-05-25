@@ -10,7 +10,7 @@ function initialize_tests {
 function expect {
     case $1 in
 	file)
-	    if [ -f $2 ]; then
+	    if [ ! -f $2 ]; then
 		message="file does not exist: $2"
 	    fi
 	    ;;
