@@ -16,14 +16,6 @@ function download {
     fi
 }
 
-# apps
-
-function wordpress {
-    download http://wordpress.org/latest.tar.gz
-    tar -xvzf latest.tar.gz
-}
-
-
 # tests
 
 function test_download_all {
