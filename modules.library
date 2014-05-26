@@ -29,7 +29,7 @@ function method {
 }
 
 function prereq {
-    echo "installing $@"
-    apt-get -qq -y update
-    apt-get -qq -y install "$@"
+    echo "installing $module_name prerequisites: $@"
+    apt-get -qq -y update       > ${module_name}_update.output
+    apt-get -qq -y install "$@" > ${module_name}_prereq.output
 }
