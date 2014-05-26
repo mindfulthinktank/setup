@@ -27,7 +27,38 @@ function install {
     download $wordpress_latest_url  $wordpress_latest_file
     tar -xzf $wordpress_latest_file
 
-    mysql_call '
+    echo "
+<?php
+define('DB_NAME', '${wordpress_database}');
+define('DB_USER', '${wordpress_user}');
+define('DB_PASSWORD', '${wordpress_pass}');
+define('DB_HOST', 'localhost');
+define('DB_CHARSET', 'utf8');
+define('DB_COLLATE', '');
+
+define('AUTH_KEY',         'put your unique phrase here');
+define('SECURE_AUTH_KEY',  'put your unique phrase here');
+define('LOGGED_IN_KEY',    'put your unique phrase here');
+define('NONCE_KEY',        'put your unique phrase here');
+define('AUTH_SALT',        'put your unique phrase here');
+define('SECURE_AUTH_SALT', 'put your unique phrase here');
+define('LOGGED_IN_SALT',   'put your unique phrase here');
+define('NONCE_SALT',       'put your unique phrase here');
+
+\$table_prefix  = 'wp_';
+define('WPLANG', '');
+define('WP_DEBUG', false);
+
+if ( !defined('ABSPATH') )
+	define('ABSPATH', dirname(__FILE__) . '/');
+
+require_once(ABSPATH . 'wp-settings.php');
+" > wordpress/wp-config.php
+
+    mkdir $web_root/wordpress
+    rsync -avP wordpress/ $web_root/wordpress/
+
+    mysql_call "
         create database
             if not exists
             $wordpress_database;
@@ -35,11 +66,11 @@ function install {
         grant all
             on $wordpress_database.*
             to $wordpress_user@localhost
-            identified by "$wordpress_pass";
+            identified by '$wordpress_pass';
 
         flush privileges;
-    '
-
+    "
+    
     # do something with the resulting wordpress folder.
 }
 
