@@ -6,3 +6,6 @@ source $includes/modules.library
 $includes/ibrahimelfar/configuregit.sh
 module master
 prereq emacs
+
+# LAMP stack
+source $includes/web.module
