@@ -1,5 +1,7 @@
 #!/bin/bash
-# initial wordpress set up
+includes=`dirname $0`
 
-apt-get update -y
-apt-get install -y emacs
+source $includes/modules.library
+
+module master
+prereq emacs
