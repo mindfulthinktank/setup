@@ -41,7 +41,15 @@ function module {
 }
 
 function config {
-    echo $1
-    echo $2
     declare -g ${module_name}_$1=$2
+}
+
+function method {
+    parameters \
+	required name $1
+
+    original=`declare -f $name`
+    renamed=${original/$name ()/${module_name}_$name ()}
+    eval "$renamed"
+    unset -f $name
 }
