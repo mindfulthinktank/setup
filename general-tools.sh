@@ -35,3 +35,13 @@ function parameters {
 	esac
     done
 }
+
+function module {
+    declare -g module_name=$1
+}
+
+function config {
+    echo $1
+    echo $2
+    declare -g ${module_name}_$1=$2
+}
