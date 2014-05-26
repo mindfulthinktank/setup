@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source `dirname $0`/general-tools.sh
+
 function initialize_tests {
     test_error_message=
     test_count=0
@@ -31,17 +33,20 @@ function echo_passed {
 }
 
 function run_test {
-    echo -n "running $1..."
+    parameters \
+	required test_name $1
+
+    echo -n "running $test_name..."
     ((test_count++))
     test_error_message=
-    $1
+    $test_name
     if [ "$test_error_message" == "" ]; then
 	((test_passed_count++))
 	echo_passed
     else
 	((test_failed_count++))
 	echo_failed
-	echo "test error: $test_error_message."
+	echo "$test_name error: $test_error_message."
 	test_error_message=
     fi
 }
