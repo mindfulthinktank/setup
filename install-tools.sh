@@ -34,7 +34,7 @@ function test_download_url {
     rm -f $file_name
 }
 
-initialize_tests
-run_test test_download_all
-run_test test_download_url
-report_tests
+#initialize_tests
+#run_test test_download_all
+#run_test test_download_url
+#report_tests
