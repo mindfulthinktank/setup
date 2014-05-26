@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function module {
+    declare -g module_name=$1
+    all_modules+=($module_name)
+    declare -a all_${module_name}_configs
+}
+
+function config {
+    var=${module_name}_$1
+    if [ "$2" == "prompt" ]; then
+	echo -n "$var>"
+	read value
+    else
+	value=$2
+    fi
+    declare -g $var=$value
+}
+
+function method {
+    parameters \
+	required name $1
+
+    original=`declare -f $name`
+    renamed=${original/$name ()/${module_name}_$name ()}
+    eval "$renamed"
+    unset -f $name
+}

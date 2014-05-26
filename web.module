@@ -1,0 +1,7 @@
+#!/bin/bash
+includes=`dirname $0`
+
+source $includes/modules.library
+
+module web
+config root /var/www

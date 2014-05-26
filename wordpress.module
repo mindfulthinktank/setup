@@ -1,22 +1,10 @@
 #!/bin/bash
+includes=`dirname $0`
 
-source `dirname $0`/general-tools.sh
-source `dirname $0`/install-tools.sh
-
-# From other "modules"
-
-module web
-config root /var/www
-
-module mysql
-config user root
-config pass root
-
-function call {
-    mysql -h localhost -u $mysql_user -p$mysql_pass -e "$@"
-}
-
-method call
+source $includes/modules.library
+source $includes/tools.library
+source $includes/web.module
+source $includes/mysql.module
 
 module wordpress
 
@@ -25,9 +13,9 @@ config latest_url        http://wordpress.org/latest.tar.gz
 config latest_file       latest.tar.gz
 config target_directory  ${web_root}/wordpress
 
-config database          wordpress
-config user              wordpressuser
-config pass              password
+config database          prompt
+config user              prompt
+config pass              prompt
 
 function prepare {
     pushd $wordpress_working_directory
@@ -64,7 +52,3 @@ function cleanup {
 method prepare
 method install
 method cleanup
-
-wordpress_prepare
-wordpress_install
-wordpress_cleanup

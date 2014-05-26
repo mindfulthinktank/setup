@@ -1,0 +1,14 @@
+#!/bin/bash
+includes=`dirname $0`
+
+source $includes/modules.library
+
+module mysql
+config user prompt
+config pass prompt
+
+function call {
+    mysql -h localhost -u $mysql_user -p$mysql_pass -e "$@"
+}
+
+method call
