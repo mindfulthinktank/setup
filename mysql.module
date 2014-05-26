@@ -6,9 +6,16 @@ source $includes/modules.library
 module mysql
 config user prompt
 config pass prompt
+prereq mysql-server libapache2-mod-auth-mysql php5-mysql
 
 function call {
     mysql -h localhost -u $mysql_user -p$mysql_pass -e "$@"
 }
 
+function install {
+    mysql_install_db
+    /usr/bin/mysql_secure_installation
+}
+
 method call
+method install

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash +x
 includes=`dirname $0`
 
 source $includes/wordpress.module

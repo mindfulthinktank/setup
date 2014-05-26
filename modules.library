@@ -9,7 +9,8 @@ function module {
 function config {
     var=${module_name}_$1
     if [ "$2" == "prompt" ]; then
-	echo -n "$var>"
+# need to echo only when in interactive mode, to be implemented
+#	echo -n "$var>"
 	read value
     else
 	value=$2
@@ -25,4 +26,10 @@ function method {
     renamed=${original/$name ()/${module_name}_$name ()}
     eval "$renamed"
     unset -f $name
+}
+
+function prereq {
+    echo "installing $@"
+    apt-get -qq -y update
+    apt-get -qq -y install "$@"
 }

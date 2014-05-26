@@ -7,6 +7,7 @@ source $includes/web.module
 source $includes/mysql.module
 
 module wordpress
+prereq php5-gd
 
 config working_directory /tmp
 config latest_url        http://wordpress.org/latest.tar.gz
@@ -56,7 +57,7 @@ require_once(ABSPATH . 'wp-settings.php');
 " > wordpress/wp-config.php
 
     mkdir $web_root/wordpress
-    rsync -avP wordpress/ $web_root/wordpress/
+    rsync -aqP wordpress/ $web_root/wordpress/
 
     mysql_call "
         create database

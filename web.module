@@ -5,3 +5,4 @@ source $includes/modules.library
 
 module web
 config root /var/www
+prereq apache2
