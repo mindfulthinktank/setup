@@ -5,9 +5,18 @@ source `dirname $0`/install-tools.sh
 
 # From other "modules"
 
-web_root=/var/www
-mysql_user=root
-mysql_pass=root
+module web
+config root /var/www
+
+module mysql
+config user root
+config pass root
+
+function call {
+    mysql -h localhost -u $mysql_user -p$mysql_pass -e "$@"
+}
+
+method call
 
 module wordpress
 
@@ -26,27 +35,22 @@ function prepare {
     rm -rf wordpress
 }
 
-function _mysql {
-    mysql -h localhost -u $mysql_user -p$mysql_pass -e "$@"
-}
-
 function install {
-#    download $wordpress_latest_url  $wordpress_latest_file
-#    tar -xzf $wordpress_latest_file
+    download $wordpress_latest_url  $wordpress_latest_file
+    tar -xzf $wordpress_latest_file
 
-    _mysql '
-create database
-  if not exists
-  $wordpress_database;
+    mysql_call '
+        create database
+            if not exists
+            $wordpress_database;
 
-grant all
-  on $wordpress_database.*
-  to $wordpress_user@localhost
-  identified by "$wordpress_pass";
+        grant all
+            on $wordpress_database.*
+            to $wordpress_user@localhost
+            identified by "$wordpress_pass";
 
-flush privileges;
-'
-
+        flush privileges;
+    '
 
     # do something with the resulting wordpress folder.
 }
