@@ -15,7 +15,13 @@ function call {
 
 function install {
     mysql_install_db
-    /usr/bin/mysql_secure_installation
+    echo "$mysql_root_pass
+n
+Y
+Y
+Y
+Y
+" | /usr/bin/mysql_secure_installation
 }
 
 method call
