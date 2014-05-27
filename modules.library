@@ -17,7 +17,7 @@ function config {
     var=${module_name}_$name
     if [ "$value" == "prompt" ]; then
 # need to echo only when in interactive mode, to be implemented
-#	echo -n "$var>"
+	echo -n "$var>"
 	read value
     fi
     declare -g $var=$value
@@ -28,14 +28,12 @@ function method {
 	required name $1
 
     original=`declare -f $name`
-    renamed=${original/$name ()/${module_name}_$name ()}
+    renamed=${original/$name ()/${module_name}.$name ()}
     eval "$renamed"
     unset -f $name
 }
 
 function prereq {
-    echo "updating apps"
-    apt-get -qq -y update       # &> ${module_name}_update.output
-    echo "installing $module_name prerequisites: $@"
-    apt-get -qq -y install "$@" # &> ${module_name}_prereq.output
+    doonce.silent "apt-get -qq -y update"
+    doonce.execute "apt-get -qq -y install $@"
 }

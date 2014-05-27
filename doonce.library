@@ -1,0 +1,67 @@
+#!/bin/bash
+
+locks=/tmp/locks
+
+function doonce.prepare() {
+    if [ -d $locks ]; then rm -rf $locks; fi
+    mkdir -p $locks
+}
+
+function doonce.cleanup() {
+    if [ -d $locks ]; then rm -rf $locks; fi
+}
+
+function doonce.include {
+    relativeincludeonce " " "$@"
+}
+
+function doonce.library {
+    relativeincludeonce .library "$@"
+}
+
+function doonce.module {
+    relativeincludeonce .module "$@"
+}
+
+function relativeincludeonce {
+    extension=$1
+    shift
+    includeonce `dirname $0`/"$@"$extension
+}
+
+function doonce.execute {
+    doonce execute "$@"
+}
+
+function doonce.silent {
+    doonce silent "$@"
+}
+
+function includeonce {
+    doonce include "$@"
+}
+
+function doonce {
+    local action=$1
+    shift
+    local path="$locks/$@"
+    if [ ! -f "$path" ]; then
+	local lock_file_dir=`dirname "$path"`
+	if [ ! -d $lock_file_dir ]; then mkdir -p $lock_file_dir; fi
+	touch "$locks/$@"
+	echo "$action once: $@"
+	case $action in
+	    execute)
+		$@
+		;;
+	    include)
+		source "$@"
+		;;
+	    silent)
+		$@ &> /tmp/"$@".output
+		;;
+	    *)
+		;;
+	esac
+    fi
+}

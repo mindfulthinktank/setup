@@ -1,13 +1,18 @@
 #!/bin/bash
-includes=`dirname $0`
 
-source $includes/modules.library
+source `dirname $0`/doonce.library
+doonce.prepare
 
-$includes/ibrahimelfar/configuregit.sh
+doonce.include ibrahimelfar/configuregit.sh
+doonce.include common.header
+doonce.library modules
+
 module master
 prereq emacs
 
 # LAMP stack
-source $includes/web.module
-source $includes/mysql.module
-mysql_install
+doonce.module web
+doonce.module mysql
+mysql.install
+
+doonce.cleanup
