@@ -23,6 +23,13 @@ function config {
     declare -g $var=$value
 }
 
+function debcon {
+    parameters \
+	required debian_configuration "$1"
+
+    debconf-set-selections <<< $debian_configuration
+}
+
 function method {
     parameters \
 	required name $1

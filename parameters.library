@@ -16,7 +16,7 @@ function parameters {
 	k=$((i+2))
 	case ${!i} in
 	    required)
-		declare -g ${!j}=${!k}
+		declare -g ${!j}="${!k}"
 		((i+=3))
 		;;
 	    optional)
@@ -29,8 +29,9 @@ function parameters {
 		fi
 		;;
 	    *)
-		echo "error in parameters; expecting optional | required"
-		
+		echo "error in parameters; expecting optional | required" \
+		    "unexpected: ${!i}"
+		exit 1
 		;;
 	esac
     done
