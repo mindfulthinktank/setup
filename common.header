@@ -1,0 +1,5 @@
+#!/bin/bash
+# exit script if a variable is used but not set
+set -o nounset
+# exit script if any function returns a non true value.
+set -e
