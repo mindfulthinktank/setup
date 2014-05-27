@@ -9,3 +9,5 @@ prereq emacs
 
 # LAMP stack
 source $includes/web.module
+source $includes/mysql.module
+mysql_install
