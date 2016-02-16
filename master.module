@@ -13,6 +13,8 @@ prereq emacs
 # LAMP stack
 doonce.module web
 doonce.module mysql
+doonce.module php
 mysql.install
+php.install
 
 doonce.cleanup
