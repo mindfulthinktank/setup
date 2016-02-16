@@ -7,7 +7,7 @@ module mysql
 config root_pass prompt
 debcon "mysql-server mysql-server/root_password $mysql_root_pass"
 debcon "mysql-server mysql-server/root_password_again $mysql_root_pass"
-prereq mysql-server libapache2-mod-auth-mysql php5-mysql
+prereq mysql-server php5-mysql
 
 function call {
     mysql -h localhost -u root -p$mysql_root_pass -e "$@"
