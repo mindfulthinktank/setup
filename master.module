@@ -10,11 +10,16 @@ doonce.library modules
 module master
 prereq emacs
 
-# LAMP stack
+# LAMP+Wordpress stack
 doonce.module web
 doonce.module mysql
 doonce.module php
+doonce.module wordpress
+
 mysql.install
 php.install
+wordpress.prepare
+wordpress.install
+wordpress.cleanup
 
 doonce.cleanup
