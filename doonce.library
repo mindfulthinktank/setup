@@ -58,7 +58,9 @@ function doonce {
 		source "$@"
 		;;
 	    silent)
-		$@ &> /tmp/"$@".output
+		local log_file_name=/tmp/"$@".output
+		echo $log_file_name
+		$@ &> "$log_file_name"
 		;;
 	    *)
 		;;
