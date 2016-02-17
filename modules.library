@@ -42,5 +42,5 @@ function method {
 
 function prereq {
     doonce.silent "apt-get -qq -y update"
-    doonce.execute "apt-get -qq -y install $@"
+    doonce.silent "apt-get -qq -y install $@"
 }
